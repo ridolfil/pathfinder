@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "test1", "test1\test1.pyproj", "{0153B179-AD85-43CA-8A81-674CB0A87405}"
+Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "Pathfinder", "test1\Pathfinder.pyproj", "{0153B179-AD85-43CA-8A81-674CB0A87405}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
