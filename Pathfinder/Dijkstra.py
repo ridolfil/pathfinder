@@ -50,9 +50,6 @@ class Node:
     def getNeighbours(self):
         return self.neighbours
     
-    def calculate_distance(other_node):
-        raise NotImplementedError
-    
     def add_neighbour(self, node, distance):
         self.neighbours.append((node, distance))
 
@@ -69,45 +66,45 @@ class Pathfinder:
     
 
     def __init__(self, graph):
-        self.start_node = 0
-        self.destination = 0
+        self.start_node = None
+        self.destination = None
         self.Graph = graph
-        self.unvisited_nodes = Graph.nodes_list.keys()
+        self.unvisited_nodes = self.Graph.nodes_list.keys()
 
     #def create_list():
     #    return [[x,y] for x in Graph.nodes_list.keys() for y in [sys.float_info.max]*len(Graph.nodes_list.keys())]
             
 
     def set_initial_node(self, firstNode):
-        self.start_node=firstNode.ID
-        self.Graph.set_distance(start_node,0)
+        self.start_node=self.Graph.get_node(firstNode)
+        self.Graph.set_distance(self.start_node.ID,0)
 
     def set_final_node(self, final_node):
-        self.destination = final_node.ID
+        self.destination = self.Graph.get_node(final_node)
 
-    def checkNeighbours(current_node):
+    def checkNeighbours(self, current_node):
         
         neighbours_list = current_node.getNeighbours()
 
         for n in neighbours_list:
-            if n.isvisited==False : #could also be n.ID in unvisited_nodes
-                tentative_dist = current.total_length + current_node.calculate_distance(n)
-                if  tentative_dist < n.total_length:
-                    n.total_length = tentative_dist
+            if n[0].isvisited==False : #could also be n.ID in unvisited_nodes
+                tentative_dist = current_node.total_dist + n[1]
+                if  tentative_dist < n[0].total_dist:
+                    n[0].total_dist = tentative_dist
         current_node.isvisited = True
 
 
     def traverse_graph(self):
-        while destination.isvisited==Fase:
-            sorted(unvisited_nodes, key= lambda id:self.Graph.get_distance(id), reverse=True)
-            current = Graph.get_node(self.unvisited_nodes.pop())
+        while self.destination.isvisited==False:
+            self.unvisited_nodes.sort(key= lambda id:self.Graph.get_distance(id), reverse=True)
+            current = self.Graph.get_node(self.unvisited_nodes.pop())
             if current.total_dist < sys.float_info.max:
-                checkNeighbours(current)
+                self.checkNeighbours(current)
             else: break
 
 
     def get_dist(self):
-        return self.destination.total_length
+        return self.destination.total_dist
 
 
 
@@ -115,16 +112,13 @@ class Graph_Structure:
 
     def __init__(self,lst):
         self.nodes_list = {}
-        create_nodes_list(lst)
-
-    def create_nodes_list(self,lst):
         for edge in lst:
-            add_node(edge[0]).add_neighbour(add_node(edge[1]), edge[2])
+            self.add_node(edge[0]).add_neighbour(self.add_node(edge[1]), edge[2])
 
     def add_node(self,id):
-        if id not in nodes_list:
+        if id not in self.nodes_list:
             new_node = Node(id)
-            nodes_list.append(new_node)
+            self.nodes_list[id]=new_node
         return self.nodes_list[id]
 
     def set_distance(self,id, dist):
@@ -137,14 +131,14 @@ class Graph_Structure:
 
 
 rows = 2
-cols = 2
+cols = 3
 
-n_list = create_rectangular_graph(rows,cols)
+n_list = create_rectangular_graph(cols,rows)
 
 gr = Graph_Structure(n_list)
 
 pf = Pathfinder(gr)
 pf.set_initial_node(1)
-pf.set_final_node(2)
+pf.set_final_node(5)
 pf.traverse_graph()
 print(pf.get_dist())
