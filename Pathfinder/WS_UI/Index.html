@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <link href="../WS_UI/css/bootstrap.css" rel="stylesheet" />
+    <link href="../WS_UI/css/Stylesheet.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="container">
+        <div class="row pt-4 justify-content-center">
+            <div class="col-4">
+                <div class="test">
+                    <h1>Test</h1>
+                    <button type="button" class="btn btn-outline-secondary btn-sm">Hey</button>
+                </div>
+                <div id="input_space">
+                    <div class="form-group form-inline">
+                        <label>Rows:</label>
+                        <input type="number" class="form-control" id="rows_numb"/>
+                    </div>
+                    <div class="form-group form-inline">
+                        <label>Columns:</label>
+                        <input type="number" class="form-control" id="cols_numb"/>
+                    </div>
+                    <label>Show grid</label>
+                    <input type="checkbox" />
+                </div>
+                <div id="output_space">
+                    <h5 id="heading">Log:</h5>
+                    <div id="output_message">
+                        <p>testtest test</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-8">
+                <div class="mx-auto" id="drawing_box">
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <script src="../WS_UI/js/jquery-3.3.1.js"></script>
+    <script src="../WS_UI/js/bootstrap.js"></script>
+    <script type="text/javascript">
+
+        //Name space for SVG elements
+        const ns = "http://www.w3.org/2000/svg"
+        var grid_h_div = 5
+        var grid_w_div = 5
+        var svg_width
+        var svg_height
+
+        //Draving  DIV
+        var draw_box = $("#drawing_box")
+        svg_width = draw_box.width()
+        svg_height = draw_box.height()
+
+
+        //Create SVG container
+        var svg_container = $(document.createElementNS(ns, "svg"))
+        //Set SVG container size same as its parent
+        svg_container.attr("width", svg_width)
+        svg_container.attr("height", svg_height)
+        draw_box.append(svg_container)
+
+
+        //var c1 = draw_circle(0, 100, 10, "#ddd")
+        //svg_container.append(c1)
+
+        draw_grid(grid_h_div, grid_w_div)
+
+
+        function draw_grid(rows, cols) {
+
+            const predef_dist = 30
+            const predef_radius = 10
+            const margin = 0.9
+            var color = "#ddd"
+
+            var dist = predef_dist
+            var radius = predef_radius
+
+            // Set distance between each point based on the gid size
+            if (predef_dist * rows > svg_height) {
+                //set new distance between each point 
+                dist = svg_height * margin / rows
+                radius = predef_radius * dist / predef_dist
+            }
+            else if (predef_dist * cols > svg_width) {
+                //set new distance between each point 
+                dist = svg_width * margin / cols
+                radius = predef_radius * dist / predef_dist
+            }
+
+
+            for (i = -rows * 0.5 + 0.5; i < rows * 0.5 + 0.5; i++) {
+                for (j = -cols * 0.5 + 0.5; j < cols * 0.5 + 0.5; j++) {
+                    svg_container.append(draw_circle(dist * j, dist * i, radius, color))
+                }
+            }
+
+            //List of IDs
+            var id_list = [rows * cols]
+            for (i in id_list) id_list[1] = i
+
+
+
+
+        }
+
+
+        //Draw circle function
+        function draw_circle(x, y, radius, color) {
+            var circ_coord = chng_coord(x, y)
+            var circ1 = $(document.createElementNS(ns, "circle"))
+            var circ = $(circ1)
+            circ.attr("cx", circ_coord.x)
+            circ.attr("cy", circ_coord.y)
+            circ.attr("r", radius)
+            circ.attr("fill", color)
+            circ.attr("stroke", "purple")
+            circ.attr("stroke-width", 0.5)
+
+            return circ
+        }
+
+
+
+        //Convert coordinates from Top-left system to centered
+        function chng_coord(i_x, i_y) {
+            return {
+                x: -i_x + svg_width / 2,
+                y: -i_y + svg_height / 2
+            }
+        }
+
+
+
+    </script>
+</body>
+</html>

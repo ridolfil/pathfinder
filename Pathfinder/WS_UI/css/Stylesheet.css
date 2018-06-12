@@ -1,0 +1,61 @@
+﻿.test
+{
+	text-align: center;
+	padding:20px;
+}
+
+#input_space
+{
+    font-size: small;
+	margin:30px auto;
+}
+
+#input_space .form-control {
+    width: 50px;
+    padding: 0px;
+    /*line-height: 1.5;*/
+    color: #495057;
+    border-radius: 3px;
+	font-size: small;
+	text-align:center;
+}
+
+#input_space label{
+	width:70px;
+    justify-content:right;	
+
+}
+
+#output_space
+{
+
+    height: 100px;
+    background-color: rgb(239, 239, 239);
+    border-radius: 3px;
+    padding: 6px;
+    font-size: 10px;
+    font-family: monospace;
+    color: #919ab3;
+    margin: 30px auto;
+}
+
+#output_space #heading{
+	display: block;
+    border-bottom: solid 1px #d2d0d0;
+    font-size: 13px;
+    font-weight: bold;
+    padding: 0px 5px;
+}
+
+#output_space #output_message{
+	margin 5px auto;
+	padding:0px 5px;
+}
+
+#drawing_box{
+	width:500px;
+	height:500px;
+	margin: 10px;
+	border:1px solid #d6cfcf;
+	border-radius:3px;
+}

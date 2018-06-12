@@ -1,5 +1,6 @@
 import sys
 import numpy as np
+import matplotlib.pyplot as plt
 
 def create_rectangular_graph(col, rows):
     
@@ -9,12 +10,21 @@ def create_rectangular_graph(col, rows):
         for y in range(rows):
             if y>0: 
                 list.append([rows*x+y,rows*x+y-1,1])
+                if x>0:
+                    list.append([rows*x+y,rows*(x-1)+y-1,1.4142])
+                if x<col-1:
+                    list.append([rows*x+y,rows*(x+1)+y-1,1.4142])
             if y<rows-1: 
                 list.append([rows*x+y,rows*x+y+1,1])
+                if x>0:
+                    list.append([rows*x+y,rows*(x-1)+y+1,1.4142])
+                if x<col-1:
+                    list.append([rows*x+y,rows*(x+1)+y+1,1.4142])
             if x>0: 
                 list.append([rows*x+y,rows*(x-1)+y,1])
             if x<col-1: 
                 list.append([rows*x+y,rows*(x+1)+y,1])
+
 
     return list
 
@@ -46,6 +56,7 @@ class Node:
         self.neighbours = []
         self.total_dist = sys.float_info.max
         self.isvisited = False
+        self.previous = None
 
     def getNeighbours(self):
         return self.neighbours
@@ -91,6 +102,7 @@ class Pathfinder:
                 tentative_dist = current_node.total_dist + n[1]
                 if  tentative_dist < n[0].total_dist:
                     n[0].total_dist = tentative_dist
+                    n[0].previous = current_node
         current_node.isvisited = True
 
 
@@ -105,6 +117,15 @@ class Pathfinder:
 
     def get_dist(self):
         return self.destination.total_dist
+
+    def return_path(self):
+        pth = []
+        n= self.destination
+        while n != self.start_node: 
+            pth.append(n.ID)
+            n = n.previous
+        pth.append(self.start_node.ID)                    
+        return pth[::-1]
 
 
 
@@ -130,15 +151,39 @@ class Graph_Structure:
     def get_node (self, id): return self.nodes_list[id]
 
 
-rows = 2
-cols = 3
+
+
+
+rows = 20
+cols = 20
 
 n_list = create_rectangular_graph(cols,rows)
 
 gr = Graph_Structure(n_list)
 
 pf = Pathfinder(gr)
-pf.set_initial_node(1)
-pf.set_final_node(5)
+pf.set_initial_node(37)
+pf.set_final_node(366)
 pf.traverse_graph()
-print(pf.get_dist())
+print "Total distance: ", pf.get_dist()
+
+route = pf.return_path()
+
+
+### Draw the path  ###
+
+full_grid = [0] * rows * cols
+
+for i in route:
+    full_grid[i]=1
+
+full_grid = np.reshape(full_grid,(cols, rows)).T
+
+ax=plt.gca()
+im1 = ax.imshow(full_grid,interpolation='none',origin='upper', cmap=plt.cm.gray)
+ax.set_xticks(np.arange(full_grid.shape[1]+1)-0.5,minor=True)
+ax.set_yticks(np.arange(full_grid.shape[0]+1)-0.5,minor=True)
+ax.grid(which='minor', color='w', linestyle='-',linewidth=1)
+
+plt.show()
+

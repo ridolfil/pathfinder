@@ -25,6 +25,35 @@
   <ItemGroup>
     <Compile Include="Dijkstra.py" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="WS_UI\" />
+    <Folder Include="WS_UI\css\" />
+    <Folder Include="WS_UI\js\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="WS_UI\css\bootstrap-grid.css" />
+    <Content Include="WS_UI\css\bootstrap-grid.css.map" />
+    <Content Include="WS_UI\css\bootstrap-grid.min.css" />
+    <Content Include="WS_UI\css\bootstrap-grid.min.css.map" />
+    <Content Include="WS_UI\css\bootstrap-reboot.css" />
+    <Content Include="WS_UI\css\bootstrap-reboot.css.map" />
+    <Content Include="WS_UI\css\bootstrap-reboot.min.css" />
+    <Content Include="WS_UI\css\bootstrap-reboot.min.css.map" />
+    <Content Include="WS_UI\css\bootstrap.css" />
+    <Content Include="WS_UI\css\bootstrap.css.map" />
+    <Content Include="WS_UI\css\bootstrap.min.css" />
+    <Content Include="WS_UI\css\bootstrap.min.css.map" />
+    <Content Include="WS_UI\Index.html" />
+    <Content Include="WS_UI\js\bootstrap.bundle.js" />
+    <Content Include="WS_UI\js\bootstrap.bundle.js.map" />
+    <Content Include="WS_UI\js\bootstrap.bundle.min.js" />
+    <Content Include="WS_UI\js\bootstrap.bundle.min.js.map" />
+    <Content Include="WS_UI\js\bootstrap.js" />
+    <Content Include="WS_UI\js\bootstrap.js.map" />
+    <Content Include="WS_UI\js\bootstrap.min.js" />
+    <Content Include="WS_UI\js\bootstrap.min.js.map" />
+    <Content Include="WS_UI\js\jquery-3.3.1.js" />
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <PtvsTargetsFile>$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets</PtvsTargetsFile>
