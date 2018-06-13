@@ -18,11 +18,11 @@
                 <div id="input_space">
                     <div class="form-group form-inline">
                         <label>Rows:</label>
-                        <input type="number" class="form-control" id="rows_numb"/>
+                        <input type="number" class="form-control" id="rows_numb" value="3"/>
                     </div>
                     <div class="form-group form-inline">
                         <label>Columns:</label>
-                        <input type="number" class="form-control" id="cols_numb"/>
+                        <input type="number" class="form-control" id="cols_numb" value="3"/>
                     </div>
                     <label>Show grid</label>
                     <input type="checkbox" />
@@ -47,31 +47,57 @@
 
         //Name space for SVG elements
         const ns = "http://www.w3.org/2000/svg"
-        var grid_h_div = 5
-        var grid_w_div = 5
+        var grid_h_div
+        var grid_w_div
         var svg_width
         var svg_height
+        var svg_container
+        var draw_box
 
-        //Draving  DIV
-        var draw_box = $("#drawing_box")
-        svg_width = draw_box.width()
-        svg_height = draw_box.height()
+        //Main Function
+        $(function () {
+
+            //Use the predefined values
+            grid_h_div = parseInt($("#rows_numb").val());
+            grid_w_div = parseInt($("#cols_numb").val());
+
+            //Draving  DIV
+            draw_box = $("#drawing_box")
+            svg_width = draw_box.width()
+            svg_height = draw_box.height()
+
+            //Create SVG container
+            svg_container = $(document.createElementNS(ns, "svg"))
+
+            //Set SVG container size same as its parent
+            svg_container.attr("width", svg_width)
+            svg_container.attr("height", svg_height)
+            draw_box.append(svg_container)
+
+            draw_grid(grid_h_div, grid_w_div)
+
+        });
 
 
-        //Create SVG container
-        var svg_container = $(document.createElementNS(ns, "svg"))
-        //Set SVG container size same as its parent
-        svg_container.attr("width", svg_width)
-        svg_container.attr("height", svg_height)
-        draw_box.append(svg_container)
+        //Event of input change
+        $("#rows_numb,#cols_numb").change(function () {
+            grid_h_div = parseInt($("#rows_numb").val());
+            grid_w_div = parseInt($("#cols_numb").val());
+
+            clear_svg();
+
+            draw_grid(grid_h_div, grid_w_div);
+
+        })
 
 
-        //var c1 = draw_circle(0, 100, 10, "#ddd")
-        //svg_container.append(c1)
+        //Empty the svg
+        function clear_svg() {
+            $("svg").empty()
+        }
 
-        draw_grid(grid_h_div, grid_w_div)
 
-
+        //Create and append the circles to the svg space
         function draw_grid(rows, cols) {
 
             const predef_dist = 30
@@ -104,8 +130,6 @@
             //List of IDs
             var id_list = [rows * cols]
             for (i in id_list) id_list[1] = i
-
-
 
 
         }

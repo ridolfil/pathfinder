@@ -29,7 +29,7 @@
 #output_space
 {
 
-    height: 100px;
+
     background-color: rgb(239, 239, 239);
     border-radius: 3px;
     padding: 6px;
@@ -50,6 +50,7 @@
 #output_space #output_message{
 	margin 5px auto;
 	padding:0px 5px;
+	height: 200px;
 }
 
 #drawing_box{
