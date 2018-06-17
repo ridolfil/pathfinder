@@ -53,6 +53,10 @@
         var svg_height
         var svg_container
         var draw_box
+        var deactivated_nodes = [];
+        var circle_color = "#ddd"
+        var circle_deactivated_color = "#444"
+
 
         //Main Function
         $(function () {
@@ -97,13 +101,31 @@
         }
 
 
+        //Click on a circle. Change color and change status on the lookup table 
+        function attach_click_event() {
+            $("circle").click(function () {
+                circ_caller = $(this);
+                c_id = parseInt(circ_caller.attr("cid"));
+
+                if (deactivated_nodes[c_id] == 0) {
+                    deactivated_nodes[c_id] = 1
+                    circ_caller.attr("fill", circle_deactivated_color)
+                } else if (deactivated_nodes[c_id] == 1) {
+                    deactivated_nodes[c_id] = 0
+                    circ_caller.attr("fill", circle_color)
+                }
+
+
+            });
+        }
+
         //Create and append the circles to the svg space
         function draw_grid(rows, cols) {
 
             const predef_dist = 30
             const predef_radius = 10
             const margin = 0.9
-            var color = "#ddd"
+            var color = circle_color
 
             var dist = predef_dist
             var radius = predef_radius
@@ -120,18 +142,25 @@
                 radius = predef_radius * dist / predef_dist
             }
 
+            //Used for IDs
+            var id = 0;
 
+            //Creates and append the nodes starting from bottom right and then moving towards left
             for (i = -rows * 0.5 + 0.5; i < rows * 0.5 + 0.5; i++) {
                 for (j = -cols * 0.5 + 0.5; j < cols * 0.5 + 0.5; j++) {
-                    svg_container.append(draw_circle(dist * j, dist * i, radius, color))
+                    new_circ = draw_circle(dist * j, dist * i, radius, color).attr("cid",id);
+                    svg_container.append(new_circ);
+                    id++;
                 }
             }
 
-            //List of IDs
-            var id_list = [rows * cols]
-            for (i in id_list) id_list[1] = i
 
+            //Create the lookup list of deactivated nodes. 
+            deactivated_nodes.length = rows*cols;
+            deactivated_nodes.fill(0);
 
+            //reattach click events
+            attach_click_event()
         }
 
 
