@@ -50,7 +50,22 @@
 #output_space #output_message{
 	margin 5px auto;
 	padding:0px 5px;
+
+}
+
+#message_wrapper{
+	overflow: hidden;
+	position:relative;
 	height: 200px;
+}
+
+#output_message{
+	position:absolute;
+	bottom:0;
+}
+
+#output_message p{
+	margin:0;
 }
 
 #drawing_box{

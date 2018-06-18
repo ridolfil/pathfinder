@@ -18,19 +18,20 @@
                 <div id="input_space">
                     <div class="form-group form-inline">
                         <label>Rows:</label>
-                        <input type="number" class="form-control" id="rows_numb" value="3"/>
+                        <input type="number" class="form-control" id="rows_numb" value="3" />
                     </div>
                     <div class="form-group form-inline">
                         <label>Columns:</label>
-                        <input type="number" class="form-control" id="cols_numb" value="3"/>
+                        <input type="number" class="form-control" id="cols_numb" value="3" />
                     </div>
                     <label>Show grid</label>
                     <input type="checkbox" />
                 </div>
                 <div id="output_space">
                     <h5 id="heading">Log:</h5>
-                    <div id="output_message">
-                        <p>testtest test</p>
+                    <div id="message_wrapper">
+                        <div id="output_message">
+                        </div>
                     </div>
                 </div>
             </div>
@@ -148,7 +149,7 @@
             //Creates and append the nodes starting from bottom right and then moving towards left
             for (i = -rows * 0.5 + 0.5; i < rows * 0.5 + 0.5; i++) {
                 for (j = -cols * 0.5 + 0.5; j < cols * 0.5 + 0.5; j++) {
-                    new_circ = draw_circle(dist * j, dist * i, radius, color).attr("cid",id);
+                    new_circ = draw_circle(dist * j, dist * i, radius, color).attr("cid", id);
                     svg_container.append(new_circ);
                     id++;
                 }
@@ -156,11 +157,18 @@
 
 
             //Create the lookup list of deactivated nodes. 
-            deactivated_nodes.length = rows*cols;
+            deactivated_nodes.length = rows * cols;
             deactivated_nodes.fill(0);
 
             //reattach click events
             attach_click_event()
+
+            disp_msg("Grid created: " + rows + " x " + cols);
+        }
+
+        //Print the list of nodes in the format "n1 n2 distance"
+        function print_nodes_list() {
+
         }
 
 
@@ -189,7 +197,12 @@
             }
         }
 
-
+        // Display messages
+        function disp_msg(msg) {
+            var line = $("<p></p>");
+            line.text("> " + msg);
+            $("#output_message").append(line)
+        }
 
     </script>
 </body>
